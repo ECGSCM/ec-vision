@@ -4,6 +4,7 @@
  */
 
 import OpenAI from 'openai';
+import type { Uploadable } from 'openai/uploads';
 
 export interface PerceptionInput {
   source: string;
@@ -77,13 +78,21 @@ export class ECAudio {
    * Whisper API で解析
    */
   private async analyzeWithWhisper(audioData: Buffer, source: string): Promise<PerceptionOutput['perception']> {
-    const file = new File([audioData], 'audio.mp3', { type: 'audio/mp3' });
+    const fs = await import('fs');
+    const os = await import('os');
+    const path = await import('path');
 
-    const response = await this.openai.audio.transcriptions.create({
-      model: 'whisper-1',
-      file: file,
-      language: 'ja', // 日本語優先
-    });
+    // 一時ファイルを作成して、Bufferを書き込む
+    const tmpDir = os.tmpdir();
+    const tmpFile = path.join(tmpDir, `ec-audio-${Date.now()}.mp3`);
+    fs.writeFileSync(tmpFile, audioData);
+
+    try {
+      const response = await this.openai.audio.transcriptions.create({
+        model: 'whisper-1',
+        file: fs.createReadStream(tmpFile) as Uploadable,
+        language: 'ja', // 日本語優先
+      });
 
     const transcript = response.text;
 
@@ -96,6 +105,14 @@ export class ECAudio {
       mood: this.detectMood(transcript),
       music_analysis: musicAnalysis,
     };
+    } finally {
+      // 一時ファイルを削除
+      try {
+        fs.unlinkSync(tmpFile);
+      } catch {
+        // 削除に失敗しても無視
+      }
+    }
   }
 
   /**
