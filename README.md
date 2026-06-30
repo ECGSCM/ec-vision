@@ -1,3 +1,19 @@
+> **Status: Dormant / 休眠中** (2026-06-30〜)
+>
+> This repository is kept public as a design reference. The perception-layer
+> functionality previously developed here has been consolidated into
+> `gscm-platform` under [ADR-0025 (Four Organs Model)](https://github.com/ECGSCM/gscm-agent/blob/main/docs/adr/0025-four-organs-model-ec-vision-audio-consolidation.md). New development now happens in `gscm-platform/lib/media-pipeline/`.
+>
+> このリポジトリは設計リファレンスとして公開を継続します。ここで開発されていた
+> perception layer の機能は、[ADR-0025「Four Organs Model」](https://github.com/ECGSCM/gscm-agent/blob/main/docs/adr/0025-four-organs-model-ec-vision-audio-consolidation.md) に基づき
+> `gscm-platform` に統合されました。今後の新規開発は
+> `gscm-platform/lib/media-pipeline/` で行います。
+>
+> **Note**: repo 名は `ec-vision` ですが、内容は EC-AUDIO (知覚層・耳) です。
+> エコシステム整理中、ラベルの整合は順次調整します。
+
+---
+
 # EC-AUDIO — 知覚層・耳
 
 > **Axiom**: ∞ → 真 (無限から真理へ)
