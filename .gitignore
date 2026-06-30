@@ -1,13 +1,4 @@
 node_modules/
 dist/
-*.log
 .env
-.env.local
 .DS_Store
-*.mp3
-*.wav
-*.m4a
-*.mp4
-test/
-coverage/
-*.tsbuildinfo
